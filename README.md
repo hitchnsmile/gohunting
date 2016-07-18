@@ -11,26 +11,38 @@ gohunting is licensed under an MIT License. Due diligence: this is my first publ
 
 	package main
 
-	import "github.com/dylanjt/gohunting"
+	import (
+		"fmt"
+		"github.com/dylanjt/gohunting"
+	)
 
 	func main() {
 		// prepare you a client
 		client := gohunting.Client("API_KEY")
 
 		// get all known addresses for a domain
-		response, exception, err := client.Search("stripe.com")
+		searchResponse, exception, err := client.Search("stripe.com")
+		if err != nil {
+			fmt.Println(err)
+			fmt.Println(exception.Message)
+		}
+		fmt.Println(searchResponse)
 
 		// generate an address for a domain and first & last name
-		response, exception, err = client.Find("stripe.com", "Dustin", "Moskovitz")
+		findResponse, _, _ := client.Find("stripe.com", "Dustin", "Moskovitz")
+		fmt.Println(findResponse)
 
 		// verify an address
-		response, exception, err = client.Verify("steli@close.io")
+		verifyResponse, _, _ := client.Verify("steli@close.io")
+		fmt.Println(verifyResponse)
 
 		// count all addresses for a domain
-		response, exception, err = client.Count("stripe.com")
+		countResponse, _, _ := client.Count("stripe.com")
+		fmt.Println(countResponse)
 
 		// information about your account
-		response, exception, err = client.Account()
+		accountResponse, _, _ := client.Account()
+		fmt.Println(accountResponse)
 	}
 
 In the above examples, `response` is a struct representation of the JSON returned by Email Hunter (refer to their [API documentation](https://emailhunter.co/api/docs) for those details). `exception` is a struct containing the fields `Status` and `Message`, both of which are populated if an API's response code is not 200. `error` is a standard Go error object you can check against to make sure your API call was executed unexceptionally.
