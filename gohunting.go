@@ -29,6 +29,7 @@ func Client(ApiKey string) *EmailHunter {
 }
 
 func (emailHunter *EmailHunter) sendRequest(formValues url.Values, emailHunterUrl string) (*http.Response, error) {
+	formValues.Set("api_key", emailHunter.ApiKey)
 	req, err := http.NewRequest("GET", emailHunterUrl, strings.NewReader(formValues.Encode()))
 	if err != nil {
 		return nil, err
