@@ -29,16 +29,7 @@ func Client(ApiKey string) *EmailHunter {
 // internal function to actually communicate with Email Hunter
 func (emailHunter *EmailHunter) sendRequest(formValues url.Values, emailHunterUrl string) (*http.Response, error) {
 	formValues.Set("api_key", emailHunter.ApiKey)
-	req, err := http.NewRequest("GET", emailHunterUrl, strings.NewReader(formValues.Encode()))
-	if err != nil {
-		return nil, err
-	}
+	req, _ := http.NewRequest("GET", emailHunterUrl, strings.NewReader(formValues.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-
-	client := emailHunter.HTTPClient
-	if client == nil {
-		client = http.DefaultClient
-	}
-
-	return client.Do(req)
+	return emailHunter.HTTPClient.Do(req)
 }
