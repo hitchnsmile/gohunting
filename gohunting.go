@@ -12,12 +12,10 @@ type EmailHunter struct {
 	HTTPClient *http.Client
 }
 
-// Exception is a representation of a Email Hunter exception.
+// Exception is a representation of a http exception.
 type Exception struct {
-	Status   int    `json:"status"`    // HTTP specific error code
-	Message  string `json:"message"`   // HTTP error message
-	Code     int    `json:"code"`      // Twilio specific error code
-	MoreInfo string `json:"more_info"` // Additional info from Twilio
+	Status  int    `json:"status"`
+	Message string `json:"message"`
 }
 
 // Create a new Email Hunter http client
@@ -28,6 +26,7 @@ func Client(ApiKey string) *EmailHunter {
 	return &EmailHunter{ApiKey, baseUrl, HTTPClient}
 }
 
+// internal function to actually communicate with Email Hunter
 func (emailHunter *EmailHunter) sendRequest(formValues url.Values, emailHunterUrl string) (*http.Response, error) {
 	formValues.Set("api_key", emailHunter.ApiKey)
 	req, err := http.NewRequest("GET", emailHunterUrl, strings.NewReader(formValues.Encode()))
