@@ -29,9 +29,6 @@ func (emailHunter *EmailHunter) Search(domain string) (searchResponse *SearchRes
 	if res.StatusCode != http.StatusOK {
 		exception = new(Exception)
 		err = json.Unmarshal(responseBody, exception)
-
-		// We aren't checking the error because we don't actually care.
-		// It's going to be passed to the client either way.
 		return searchResponse, exception, err
 	}
 
@@ -65,9 +62,6 @@ func (emailHunter *EmailHunter) Find(domain, firstName, lastName string) (findRe
 	if res.StatusCode != http.StatusOK {
 		exception = new(Exception)
 		err = json.Unmarshal(responseBody, exception)
-
-		// We aren't checking the error because we don't actually care.
-		// It's going to be passed to the client either way.
 		return findResponse, exception, err
 	}
 
@@ -99,9 +93,6 @@ func (emailHunter *EmailHunter) Verify(email string) (verifyResponse *VerifyResp
 	if res.StatusCode != http.StatusOK {
 		exception = new(Exception)
 		err = json.Unmarshal(responseBody, exception)
-
-		// We aren't checking the error because we don't actually care.
-		// It's going to be passed to the client either way.
 		return verifyResponse, exception, err
 	}
 
