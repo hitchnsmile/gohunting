@@ -80,7 +80,7 @@ func (emailHunter *EmailHunter) Find(domain, firstName, lastName string) (findRe
 // Verify uses Email Hunter to verify the deliverability of an email address.
 // See https://emailhunter.co/api/docs#email-verification for more information.
 func (emailHunter *EmailHunter) Verify(email string) (verifyResponse *VerifyResponse, exception *Exception, err error) {
-	searchUrl := emailHunter.BaseUrl + "/generate"
+	searchUrl := emailHunter.BaseUrl + "/verify"
 
 	formValues := url.Values{}
 	formValues.Set("email", email)
@@ -113,11 +113,11 @@ func (emailHunter *EmailHunter) Verify(email string) (verifyResponse *VerifyResp
 
 // Count tells you how many email addresses Email Hunter has for a domain.
 // See https://emailhunter.co/api/docs#email-count for more information.
-func (emailHunter *EmailHunter) Count(email string) (countResponse *CountResponse, exception *Exception, err error) {
-	searchUrl := emailHunter.BaseUrl + "/generate"
+func (emailHunter *EmailHunter) Count(domain string) (countResponse *CountResponse, exception *Exception, err error) {
+	searchUrl := emailHunter.BaseUrl + "/email-count"
 
 	formValues := url.Values{}
-	formValues.Set("email", email)
+	formValues.Set("domain", domain)
 
 	res, err := emailHunter.sendRequest(formValues, searchUrl)
 	if err != nil {
@@ -145,10 +145,9 @@ func (emailHunter *EmailHunter) Count(email string) (countResponse *CountRespons
 // Account gives you information, like usage, about your account.
 // See https://emailhunter.co/api/docs#account for more information.
 func (emailHunter *EmailHunter) Account(email string) (accountResponse *AccountResponse, exception *Exception, err error) {
-	searchUrl := emailHunter.BaseUrl + "/generate"
+	searchUrl := emailHunter.BaseUrl + "/account"
 
 	formValues := url.Values{}
-	formValues.Set("email", email)
 
 	res, err := emailHunter.sendRequest(formValues, searchUrl)
 	if err != nil {
