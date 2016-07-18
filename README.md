@@ -45,4 +45,4 @@ gohunting is licensed under an MIT License. Due diligence: this is my first publ
 		fmt.Println(accountResponse)
 	}
 
-In the above examples, `response` is a struct representation of the JSON returned by Email Hunter (refer to their [API documentation](https://emailhunter.co/api/docs) for those details). `exception` is a struct containing the fields `Status` and `Message`, both of which are populated if an API's response code is not 200. `error` is a standard Go error object you can check against to make sure your API call was executed unexceptionally.
+In the above examples, the `response` variables are struct representations of the JSON returned by Email Hunter (refer to their [API documentation](https://emailhunter.co/api/docs) for those details). `exception` is a struct containing the fields `Status` and `Message`, both of which are populated if an API's response code is not 200. `error` is a standard Go error object you can check against to make sure your API call was executed unexceptionally.
