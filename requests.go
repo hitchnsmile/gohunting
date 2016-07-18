@@ -144,7 +144,7 @@ func (emailHunter *EmailHunter) Count(domain string) (countResponse *CountRespon
 
 // Account gives you information, like usage, about your account.
 // See https://emailhunter.co/api/docs#account for more information.
-func (emailHunter *EmailHunter) Account(email string) (accountResponse *AccountResponse, exception *Exception, err error) {
+func (emailHunter *EmailHunter) Account() (accountResponse *AccountResponse, exception *Exception, err error) {
 	searchUrl := emailHunter.BaseUrl + "/account"
 
 	formValues := url.Values{}
