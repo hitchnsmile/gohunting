@@ -18,7 +18,7 @@ A client is needed for all requests to Email Hunter:
 	client := gohunting.Client("API_KEY")
 	
 ### Methods
-Each of these methods returns a `response` struct, which is just a representation of the JSON returned by Email Hunter (refer to their [API documentation](https://emailhunter.co/api/docs) for those details); an `exception` struct containing the fields `Status` and `Message`, both of which are populated if an API's response code is not 200; and a standard Go `error` you can check against to make sure your API call was executed unexceptionally.
+Each of these methods returns a `response` struct, which is just a representation of the JSON returned by Email Hunter (refer to their [API documentation](https://emailhunter.co/api/docs) for those details), and an `error` that is the body message from Email Hunter if an error occurred (i.e. "invalid API key").
 
 - `client.Search("stripe.com")` returns all known stripe.com emails
 - `client.Find("stripe.com", "Dustin", "Moskovitz")` generates an address for this domain and name based on available data or known pattern
@@ -61,5 +61,3 @@ Each of these methods returns a `response` struct, which is just a representatio
 		accountResponse, _ := client.Account()
 		fmt.Println(accountResponse)
 	}
-
-In the above examples, the `response` variables are struct representations of the JSON returned by Email Hunter (refer to their [API documentation](https://emailhunter.co/api/docs) for those details). `error` is the body message from Email Hunter when an error occurs (i.e. "invalid API key").
