@@ -2,6 +2,7 @@ package gohunting
 
 import (
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -9,7 +10,7 @@ import (
 
 // Search uses Email Hunter find all the email addresses corresponding to a domain.
 // See https://emailhunter.co/api/docs#domain-search for more information.
-func (emailHunter *EmailHunter) Search(domain string) (searchResponse *SearchResponse, exception *Exception, err error) {
+func (emailHunter *EmailHunter) Search(domain string) (searchResponse *SearchResponse, err error) {
 	searchUrl := emailHunter.BaseUrl + "/search"
 
 	formValues := url.Values{}
@@ -17,19 +18,23 @@ func (emailHunter *EmailHunter) Search(domain string) (searchResponse *SearchRes
 
 	res, err := emailHunter.sendRequest(formValues, searchUrl)
 	if err != nil {
-		return searchResponse, exception, err
+		return searchResponse, err
 	}
 	defer res.Body.Close()
 
 	responseBody, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return searchResponse, exception, err
+		return searchResponse, err
 	}
 
 	if res.StatusCode != http.StatusOK {
-		exception = new(Exception)
-		err = json.Unmarshal(responseBody, exception)
-		return searchResponse, exception, err
+		var exception Exception
+		err = json.Unmarshal(responseBody, &exception)
+		if err != nil {
+			return searchResponse, err
+		}
+		err = errors.New(exception.Message)
+		return searchResponse, err
 	}
 
 	searchResponse = new(SearchResponse)
@@ -40,7 +45,7 @@ func (emailHunter *EmailHunter) Search(domain string) (searchResponse *SearchRes
 
 // Find uses Email Hunter to generate the most likely email address.
 // See https://emailhunter.co/api/docs#email-finder for more information.
-func (emailHunter *EmailHunter) Find(domain, firstName, lastName string) (findResponse *FindResponse, exception *Exception, err error) {
+func (emailHunter *EmailHunter) Find(domain, firstName, lastName string) (findResponse *FindResponse, err error) {
 	searchUrl := emailHunter.BaseUrl + "/generate"
 
 	formValues := url.Values{}
@@ -50,19 +55,23 @@ func (emailHunter *EmailHunter) Find(domain, firstName, lastName string) (findRe
 
 	res, err := emailHunter.sendRequest(formValues, searchUrl)
 	if err != nil {
-		return findResponse, exception, err
+		return findResponse, err
 	}
 	defer res.Body.Close()
 
 	responseBody, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return findResponse, exception, err
+		return findResponse, err
 	}
 
 	if res.StatusCode != http.StatusOK {
-		exception = new(Exception)
-		err = json.Unmarshal(responseBody, exception)
-		return findResponse, exception, err
+		var exception Exception
+		err = json.Unmarshal(responseBody, &exception)
+		if err != nil {
+			return findResponse, err
+		}
+		err = errors.New(exception.Message)
+		return findResponse, err
 	}
 
 	findResponse = new(FindResponse)
@@ -73,7 +82,7 @@ func (emailHunter *EmailHunter) Find(domain, firstName, lastName string) (findRe
 
 // Verify uses Email Hunter to verify the deliverability of an email address.
 // See https://emailhunter.co/api/docs#email-verification for more information.
-func (emailHunter *EmailHunter) Verify(email string) (verifyResponse *VerifyResponse, exception *Exception, err error) {
+func (emailHunter *EmailHunter) Verify(email string) (verifyResponse *VerifyResponse, err error) {
 	searchUrl := emailHunter.BaseUrl + "/verify"
 
 	formValues := url.Values{}
@@ -81,19 +90,23 @@ func (emailHunter *EmailHunter) Verify(email string) (verifyResponse *VerifyResp
 
 	res, err := emailHunter.sendRequest(formValues, searchUrl)
 	if err != nil {
-		return verifyResponse, exception, err
+		return verifyResponse, err
 	}
 	defer res.Body.Close()
 
 	responseBody, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return verifyResponse, exception, err
+		return verifyResponse, err
 	}
 
 	if res.StatusCode != http.StatusOK {
-		exception = new(Exception)
-		err = json.Unmarshal(responseBody, exception)
-		return verifyResponse, exception, err
+		var exception Exception
+		err = json.Unmarshal(responseBody, &exception)
+		if err != nil {
+			return verifyResponse, err
+		}
+		err = errors.New(exception.Message)
+		return verifyResponse, err
 	}
 
 	verifyResponse = new(VerifyResponse)
@@ -104,7 +117,7 @@ func (emailHunter *EmailHunter) Verify(email string) (verifyResponse *VerifyResp
 
 // Count tells you how many email addresses Email Hunter has for a domain.
 // See https://emailhunter.co/api/docs#email-count for more information.
-func (emailHunter *EmailHunter) Count(domain string) (countResponse *CountResponse, exception *Exception, err error) {
+func (emailHunter *EmailHunter) Count(domain string) (countResponse *CountResponse, err error) {
 	searchUrl := emailHunter.BaseUrl + "/email-count"
 
 	formValues := url.Values{}
@@ -112,19 +125,23 @@ func (emailHunter *EmailHunter) Count(domain string) (countResponse *CountRespon
 
 	res, err := emailHunter.sendRequest(formValues, searchUrl)
 	if err != nil {
-		return countResponse, exception, err
+		return countResponse, err
 	}
 	defer res.Body.Close()
 
 	responseBody, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return countResponse, exception, err
+		return countResponse, err
 	}
 
 	if res.StatusCode != http.StatusOK {
-		exception = new(Exception)
-		err = json.Unmarshal(responseBody, exception)
-		return countResponse, exception, err
+		var exception Exception
+		err = json.Unmarshal(responseBody, &exception)
+		if err != nil {
+			return countResponse, err
+		}
+		err = errors.New(exception.Message)
+		return countResponse, err
 	}
 
 	countResponse = new(CountResponse)
@@ -135,26 +152,30 @@ func (emailHunter *EmailHunter) Count(domain string) (countResponse *CountRespon
 
 // Account gives you information, like usage, about your account.
 // See https://emailhunter.co/api/docs#account for more information.
-func (emailHunter *EmailHunter) Account() (accountResponse *AccountResponse, exception *Exception, err error) {
+func (emailHunter *EmailHunter) Account() (accountResponse *AccountResponse, err error) {
 	searchUrl := emailHunter.BaseUrl + "/account"
 
 	formValues := url.Values{}
 
 	res, err := emailHunter.sendRequest(formValues, searchUrl)
 	if err != nil {
-		return accountResponse, exception, err
+		return accountResponse, err
 	}
 	defer res.Body.Close()
 
 	responseBody, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return accountResponse, exception, err
+		return accountResponse, err
 	}
 
 	if res.StatusCode != http.StatusOK {
-		exception = new(Exception)
-		err = json.Unmarshal(responseBody, exception)
-		return accountResponse, exception, err
+		var exception Exception
+		err = json.Unmarshal(responseBody, &exception)
+		if err != nil {
+			return accountResponse, err
+		}
+		err = errors.New(exception.Message)
+		return accountResponse, err
 	}
 
 	accountResponse = new(AccountResponse)

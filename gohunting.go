@@ -14,7 +14,6 @@ type EmailHunter struct {
 
 // Exception is a representation of a http exception.
 type Exception struct {
-	Status  int    `json:"status"`
 	Message string `json:"message"`
 }
 
@@ -31,5 +30,6 @@ func (emailHunter *EmailHunter) sendRequest(formValues url.Values, emailHunterUr
 	formValues.Set("api_key", emailHunter.ApiKey)
 	req, _ := http.NewRequest("GET", emailHunterUrl, strings.NewReader(formValues.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
 	return emailHunter.HTTPClient.Do(req)
 }
