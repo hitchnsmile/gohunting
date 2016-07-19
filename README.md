@@ -43,6 +43,7 @@ Each of these methods returns a `response` struct, which is just a representatio
 			fmt.Println(exception.Message)
 			panic(err)
 		}
+		
 		fmt.Println(response.Email)
 		fmt.Println(response.Score)
 	}
