@@ -25,3 +25,24 @@ Each of these methods returns a `response` struct, which is just a representatio
 - `client.Verify("steli@close.io")` verifies an email address
 - `client.Count("stripe.com")` returns the number of known addresses for stripe.com
 - `client.Account()` returns your plan information and usage
+
+### Full example
+
+	package main
+	
+	import (
+		"fmt"
+		"github.com/dylanjt/gohunting"
+	)
+	
+	func main() {
+		client := gohunting.Client("API_KEY")
+		
+		response, exception, err := client.Find("stripe.com", "Dustin", "Moskovitz")
+		if err != nil {
+			fmt.Println(exception.Message)
+			panic(err)
+		}
+		fmt.Println(response.Email)
+		fmt.Println(response.Score)
+	}
