@@ -8,9 +8,8 @@ import (
 	"net/url"
 )
 
-/* Search uses Email Hunter find all the email addresses corresponding to a domain.
- * See https://emailhunter.co/api/docs#domain-search for more information.
- */
+// Search uses Email Hunter find all the email addresses corresponding to a domain.
+// See https://emailhunter.co/api/docs#domain-search for more information.
 func (emailHunter *EmailHunter) Search(domain string) (searchResponse *SearchResponse, err error) {
 	searchURL := emailHunter.BaseURL + "/search"
 
@@ -81,9 +80,8 @@ func (emailHunter *EmailHunter) Find(domain, firstName, lastName string) (findRe
 	return
 }
 
-/* Verify uses Email Hunter to verify the deliverability of an email address.
- * See https://emailhunter.co/api/docs#email-verification for more information.
- */
+// Verify uses Email Hunter to verify the deliverability of an email address.
+// See https://emailhunter.co/api/docs#email-verification for more information.
 func (emailHunter *EmailHunter) Verify(email string) (verifyResponse *VerifyResponse, err error) {
 	searchURL := emailHunter.BaseURL + "/verify"
 
@@ -117,9 +115,8 @@ func (emailHunter *EmailHunter) Verify(email string) (verifyResponse *VerifyResp
 	return
 }
 
-/* Count tells you how many email addresses Email Hunter has for a domain.
- * See https://emailhunter.co/api/docs#email-count for more information.
- */
+// Count tells you how many email addresses Email Hunter has for a domain.
+// See https://emailhunter.co/api/docs#email-count for more information.
 func (emailHunter *EmailHunter) Count(domain string) (countResponse *CountResponse, err error) {
 	searchURL := emailHunter.BaseURL + "/email-count"
 
@@ -153,9 +150,8 @@ func (emailHunter *EmailHunter) Count(domain string) (countResponse *CountRespon
 	return
 }
 
-/* Account gives you information, like usage, about your account.
- * See https://emailhunter.co/api/docs#account for more information.
- */
+// Account gives you information, like usage, about your account.
+// See https://emailhunter.co/api/docs#account for more information.
 func (emailHunter *EmailHunter) Account() (accountResponse *AccountResponse, err error) {
 	searchURL := emailHunter.BaseURL + "/account"
 
