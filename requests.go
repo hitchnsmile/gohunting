@@ -8,15 +8,16 @@ import (
 	"net/url"
 )
 
-// Search uses Email Hunter find all the email addresses corresponding to a domain.
-// See https://emailhunter.co/api/docs#domain-search for more information.
+/* Search uses Email Hunter find all the email addresses corresponding to a domain.
+ * See https://emailhunter.co/api/docs#domain-search for more information.
+ */
 func (emailHunter *EmailHunter) Search(domain string) (searchResponse *SearchResponse, err error) {
-	searchUrl := emailHunter.BaseUrl + "/search"
+	searchURL := emailHunter.BaseURL + "/search"
 
 	formValues := url.Values{}
 	formValues.Set("domain", domain)
 
-	res, err := emailHunter.sendRequest(formValues, searchUrl)
+	res, err := emailHunter.sendRequest(formValues, searchURL)
 	if err != nil {
 		return searchResponse, err
 	}
@@ -46,14 +47,14 @@ func (emailHunter *EmailHunter) Search(domain string) (searchResponse *SearchRes
 // Find uses Email Hunter to generate the most likely email address.
 // See https://emailhunter.co/api/docs#email-finder for more information.
 func (emailHunter *EmailHunter) Find(domain, firstName, lastName string) (findResponse *FindResponse, err error) {
-	searchUrl := emailHunter.BaseUrl + "/generate"
+	searchURL := emailHunter.BaseURL + "/generate"
 
 	formValues := url.Values{}
 	formValues.Set("domain", domain)
 	formValues.Set("first_name", firstName)
 	formValues.Set("last_name", lastName)
 
-	res, err := emailHunter.sendRequest(formValues, searchUrl)
+	res, err := emailHunter.sendRequest(formValues, searchURL)
 	if err != nil {
 		return findResponse, err
 	}
@@ -80,15 +81,16 @@ func (emailHunter *EmailHunter) Find(domain, firstName, lastName string) (findRe
 	return
 }
 
-// Verify uses Email Hunter to verify the deliverability of an email address.
-// See https://emailhunter.co/api/docs#email-verification for more information.
+/* Verify uses Email Hunter to verify the deliverability of an email address.
+ * See https://emailhunter.co/api/docs#email-verification for more information.
+ */
 func (emailHunter *EmailHunter) Verify(email string) (verifyResponse *VerifyResponse, err error) {
-	searchUrl := emailHunter.BaseUrl + "/verify"
+	searchURL := emailHunter.BaseURL + "/verify"
 
 	formValues := url.Values{}
 	formValues.Set("email", email)
 
-	res, err := emailHunter.sendRequest(formValues, searchUrl)
+	res, err := emailHunter.sendRequest(formValues, searchURL)
 	if err != nil {
 		return verifyResponse, err
 	}
@@ -115,15 +117,16 @@ func (emailHunter *EmailHunter) Verify(email string) (verifyResponse *VerifyResp
 	return
 }
 
-// Count tells you how many email addresses Email Hunter has for a domain.
-// See https://emailhunter.co/api/docs#email-count for more information.
+/* Count tells you how many email addresses Email Hunter has for a domain.
+ * See https://emailhunter.co/api/docs#email-count for more information.
+ */
 func (emailHunter *EmailHunter) Count(domain string) (countResponse *CountResponse, err error) {
-	searchUrl := emailHunter.BaseUrl + "/email-count"
+	searchURL := emailHunter.BaseURL + "/email-count"
 
 	formValues := url.Values{}
 	formValues.Set("domain", domain)
 
-	res, err := emailHunter.sendRequest(formValues, searchUrl)
+	res, err := emailHunter.sendRequest(formValues, searchURL)
 	if err != nil {
 		return countResponse, err
 	}
@@ -150,14 +153,15 @@ func (emailHunter *EmailHunter) Count(domain string) (countResponse *CountRespon
 	return
 }
 
-// Account gives you information, like usage, about your account.
-// See https://emailhunter.co/api/docs#account for more information.
+/* Account gives you information, like usage, about your account.
+ * See https://emailhunter.co/api/docs#account for more information.
+ */
 func (emailHunter *EmailHunter) Account() (accountResponse *AccountResponse, err error) {
-	searchUrl := emailHunter.BaseUrl + "/account"
+	searchURL := emailHunter.BaseURL + "/account"
 
 	formValues := url.Values{}
 
-	res, err := emailHunter.sendRequest(formValues, searchUrl)
+	res, err := emailHunter.sendRequest(formValues, searchURL)
 	if err != nil {
 		return accountResponse, err
 	}

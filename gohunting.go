@@ -6,9 +6,10 @@ import (
 	"strings"
 )
 
+// EmailHunter to store client info in
 type EmailHunter struct {
-	ApiKey     string
-	BaseUrl    string
+	APIKey     string
+	BaseURL    string
 	HTTPClient *http.Client
 }
 
@@ -17,19 +18,20 @@ type Exception struct {
 	Message string `json:"message"`
 }
 
-// Create a new Email Hunter http client
-func Client(ApiKey string) *EmailHunter {
-	baseUrl := "https://api.emailhunter.co/v1"
+// Client creates a http client and EmailHunter struct
+func Client(APIKey string) *EmailHunter {
+	baseURL := "https://api.emailhunter.co/v1"
 	HTTPClient := http.DefaultClient
 
-	return &EmailHunter{ApiKey, baseUrl, HTTPClient}
+	return &EmailHunter{APIKey, baseURL, HTTPClient}
 }
 
 // internal function to actually communicate with Email Hunter
-func (emailHunter *EmailHunter) sendRequest(formValues url.Values, emailHunterUrl string) (*http.Response, error) {
-	formValues.Set("api_key", emailHunter.ApiKey)
-	req, _ := http.NewRequest("GET", emailHunterUrl, strings.NewReader(formValues.Encode()))
+func (emailHunter *EmailHunter) sendRequest(formValues url.Values, emailHunterURL string) (*http.Response, error) {
+	formValues.Set("api_key", emailHunter.APIKey)
+	req, err := http.NewRequest("GET", emailHunterURL, strings.NewReader(formValues.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	resp, err := emailHunter.HTTPClient.Do(req)
 
-	return emailHunter.HTTPClient.Do(req)
+	return resp, err
 }
