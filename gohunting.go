@@ -1,3 +1,4 @@
+// gohunting: but a humble API wrapper for Mail Hunter.
 package gohunting
 
 import (
