@@ -26,6 +26,9 @@ Each of these methods returns a `response` struct, which is just a representatio
 - `client.Count("stripe.com")` returns the number of known addresses for stripe.com
 - `client.Account()` returns your plan information and usage
 
+### Docs
+[godoc.org/github.com/dylanjt/gohunting](https://godoc.org/github.com/dylanjt/gohunting)
+
 ### Full example
 
 	package main
