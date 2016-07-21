@@ -1,5 +1,5 @@
 ## Overview
-A simple API wrapper for [Email Hunter](https://emailhunter.co), in Golang.
+A simple API wrapper for [Email Hunter](https://emailhunter.co), in Go.
 
 ## License
 gohunting is available for use under The MIT License.
