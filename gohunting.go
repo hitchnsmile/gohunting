@@ -21,7 +21,7 @@ type Exception struct {
 
 // Client creates a http client and EmailHunter struct
 func Client(APIKey string) *EmailHunter {
-	baseURL := "https://api.emailhunter.co/v1"
+	baseURL := "https://api.hunter.io/v2"
 	HTTPClient := http.DefaultClient
 
 	return &EmailHunter{APIKey, baseURL, HTTPClient}

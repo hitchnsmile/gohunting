@@ -1,44 +1,74 @@
 package gohunting
 
-// SearchResponse stores data from /search
+// SearchResponse stores data from /domain-search
 type SearchResponse struct {
-	Status  string `json:"status"`
-	Domain  string `json:"domain"`
-	Results int    `json:"results"`
-	Webmail bool   `json:"webmail"`
-	Pattern string `json:"pattern"`
-	Offset  int    `json:"offset"`
-	Emails  []struct {
-		Value      string    `json:"value"`
-		Type       string    `json:"type"`
-		Confidence int       `json:"confidence"`
-		Sources    []Sources `json:"sources"`
-	} `json:"emails"`
+	Data struct {
+		Domain       string `json:"domain"`
+		Webmail      bool   `json:"webmail"`
+		Pattern      string `json:"pattern"`
+		Organization string `json:"organization"`
+		Emails       []struct {
+			Value      string    `json:"value"`
+			Type       string    `json:"type"`
+			Confidence int       `json:"confidence"`
+			Sources    []Sources `json:"sources"`
+		} `json:"emails"`
+	} `json:"data"`
+	Meta struct {
+		Results int `json:"results"`
+		Limit   int `json:"limit"`
+		Offset  int `json:"offset"`
+		Params  struct {
+			Domain     string `json:"domain"`
+			Company    string `json:"company"`
+			Type       string `json:"type"`
+			Offset     int    `json:"offset"`
+			Seniority  string `json:"seniority"`
+			Department string `json:"department"`
+		}
+	}
 }
 
-// FindResponse stores data from /generate
+// FindResponse stores data from /email-finder
 type FindResponse struct {
-	Status  string    `json:"status"`
-	Email   string    `json:"email"`
-	Score   int       `json:"score"`
-	Sources []Sources `json:"sources"`
+	Data struct {
+		Email   string    `json:"email"`
+		Score   int       `json:"score"`
+		Domain  string    `json:"domain"`
+		Sources []Sources `json:"sources"`
+	} `json:"data"`
+	Meta struct {
+		Params struct {
+			FirstName string `json:"first_name"`
+			LastName  string `json:"last_name"`
+			FullName  string `json:"full_name"`
+			Domain    string `json:"domain"`
+			Company   string `json:"company"`
+		} `json:"params"`
+	} `json:"meta"`
 }
 
-// VerifyResponse stores data from /verify
+// VerifyResponse stores data from /email-verifier
 type VerifyResponse struct {
-	Status     string    `json:"status"`
-	Email      string    `json:"email"`
-	Result     string    `json:"result"`
-	Score      int       `json:"score"`
-	Regexp     bool      `json:"regexp"`
-	Gibberish  bool      `json:"gibberish"`
-	Disposable bool      `json:"disposable"`
-	Webmail    bool      `json:"webmail"`
-	MXRecords  bool      `json:"mx_records"`
-	SMTPServer bool      `json:"smtp_server"`
-	SMTPCheck  bool      `json:"smtp_check"`
-	AcceptAll  bool      `json:"accept_all"`
-	Sources    []Sources `json:"sources"`
+	Data struct {
+		Result     string    `json:"result"`
+		Score      int       `json:"score"`
+		Email      string    `json:"email"`
+		Regexp     bool      `json:"regexp"`
+		Gibberish  bool      `json:"gibberish"`
+		Disposable bool      `json:"disposable"`
+		Webmail    bool      `json:"webmail"`
+		MXRecords  bool      `json:"mx_records"`
+		SMTPServer bool      `json:"smtp_server"`
+		SMTPCheck  bool      `json:"smtp_check"`
+		AcceptAll  bool      `json:"accept_all"`
+		Sources    []Sources `json:"sources"`
+	} `json:"data"`
+	Meta struct {
+		Params struct {
+			Email string `json:"email"`
+		}
+	}
 }
 
 // CountResponse stores data from /email-count

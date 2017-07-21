@@ -11,7 +11,7 @@ import (
 // Search uses Email Hunter find all the email addresses corresponding to a domain.
 // See https://emailhunter.co/api/docs#domain-search for more information.
 func (emailHunter *EmailHunter) Search(domain string) (searchResponse *SearchResponse, err error) {
-	searchURL := emailHunter.BaseURL + "/search"
+	searchURL := emailHunter.BaseURL + "/domain-search"
 
 	formValues := url.Values{}
 	formValues.Set("domain", domain)
@@ -46,7 +46,7 @@ func (emailHunter *EmailHunter) Search(domain string) (searchResponse *SearchRes
 // Find uses Email Hunter to generate the most likely email address.
 // See https://emailhunter.co/api/docs#email-finder for more information.
 func (emailHunter *EmailHunter) Find(domain, firstName, lastName string) (findResponse *FindResponse, err error) {
-	searchURL := emailHunter.BaseURL + "/generate"
+	searchURL := emailHunter.BaseURL + "/email-finder"
 
 	formValues := url.Values{}
 	formValues.Set("domain", domain)
@@ -83,7 +83,7 @@ func (emailHunter *EmailHunter) Find(domain, firstName, lastName string) (findRe
 // Verify uses Email Hunter to verify the deliverability of an email address.
 // See https://emailhunter.co/api/docs#email-verification for more information.
 func (emailHunter *EmailHunter) Verify(email string) (verifyResponse *VerifyResponse, err error) {
-	searchURL := emailHunter.BaseURL + "/verify"
+	searchURL := emailHunter.BaseURL + "/email-verifier"
 
 	formValues := url.Values{}
 	formValues.Set("email", email)
